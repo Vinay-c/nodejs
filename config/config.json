@@ -1,0 +1,5 @@
+{
+    "mongoURI": "localhost:27017/database",
+    "secret": "thisisasecret",
+    "stripeApiKey": "sk_test_dMVctRUZEw9lWchktA0BojW0"
+}

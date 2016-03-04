@@ -1,0 +1,67 @@
+<script type="text/javascript">
+	$(function(){				
+		$('form').submit(function(e){
+			e.preventDefault();
+			var form = $(this);
+			$(".alert").hide();
+			var action = $(this).attr('action');
+			var data = {};
+			data.name = $(this).find("[name=name]").val();
+			data.password = $(this).find("[name=password]").val();
+
+			if(action != ""){
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify(data),
+					contentType: 'application/json',
+					url: action,						
+					success: function(data) {
+
+						if(data.success == true){
+							form.find(".alert-success").text(data.message);
+							form.find(".alert-success").show();
+							window.location.href = "/transaction?token="+data.token;
+						}else{
+							form.find(".alert-danger").text(data.message);
+							form.find(".alert-danger").show();
+						}
+					}
+				});
+			}
+		});	
+	});
+</script>
+<div class="col-md-6">
+<form action="/authenticate" method="POST" class="form-signin">
+	<div class="alert alert-success" style="display:none">
+	  
+	</div>
+	<div class="alert alert-danger" style="display:none">
+	  
+	</div>
+	<h2 class="form-signin-heading">Login to test page</h2>
+    <label for="name">Username: </label>
+    <input type="text" name="name" id="name" class="form-control" required>
+    <br>
+    <label for="password">Password: </label>
+    <input type="password" name="password" id="password" class="form-control" required>
+    <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block">
+</form>
+</div>
+<div class="col-md-6">
+<form action="/register" method="POST" class="form-signin">
+	<div class="alert alert-success" style="display:none">
+	  
+	</div>
+	<div class="alert alert-danger" style="display:none">
+	  
+	</div>
+	<h2 class="form-signin-heading">Register to test page</h2>
+    <label for="name">Username: </label>
+    <input type="text" name="name" id="name" class="form-control" required>
+    <br>
+    <label for="password">Password: </label>
+    <input type="password" name="password" id="password" class="form-control" required>
+    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+</form>
+</div>
